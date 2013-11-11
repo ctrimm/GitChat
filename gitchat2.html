@@ -1,0 +1,62 @@
+<!--
+- TO DO: - Stylize
+		 - Add github login Auth
+		 - Add to-do sidebar
+		 - Open source it
+-->
+<head>
+  <title>chatt</title>
+</head>
+
+<body>
+    {{> header}}
+    <div class="container">
+        {{> input}}
+        {{> messages}}
+    </div>
+</body>
+
+<template name="header">
+	<!-- Static navbar -->
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">GitChat</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/">{{loginButtons}}</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+</template>
+
+<template name="input">
+        <div id="input" class="well">
+                <strong>Your message</strong>
+                <textarea class="input-xlarge" rows="3" id="newMessage"></textarea>
+                <a class="btn btn-primary btn-large" id="send">Send</a>
+        </div>
+</template>
+
+<template name="messages">
+        <div id="messages">
+                {{#each messages}}
+                        {{> message}}
+                {{/each}}
+        </div>
+</template>
+
+<template name="message">
+        <blockquote>
+                <p>{{message}}</p>
+                <small>{{username}}</small>
+        </blockquote>
+</template>
