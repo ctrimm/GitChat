@@ -29,6 +29,12 @@ if (Meteor.isClient) {
     }
   });
 
+    Template.message.events({
+    'click #remove': function() {
+      Messages.remove(this._id);
+    }
+  });
+
   Meteor.autorun(function() {
     Meteor.subscribe("Messages");
   });
@@ -71,7 +77,7 @@ if (Meteor.isServer) {
       return true;
     },
     'remove': function(userId, doc) {
-      return false;
+      return true;
     }
   });
 }

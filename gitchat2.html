@@ -9,12 +9,20 @@
 </head>
 
 <body>
-    {{> header}}
-    <div class="container">
-        {{> input}}
-        {{> messages}}
-    </div>
+	{{> user_status}}
 </body>
+
+<template name="user_status">
+	{{#if currentUser}}
+		{{> header}}
+	    <div class="container">
+	        {{> input}}
+	        {{> messages}}
+	    </div>
+	{{else}}
+		{{> user_not_logged_in}}
+	{{/if}}	
+</template>
 
 <template name="header">
 	<!-- Static navbar -->
@@ -58,5 +66,36 @@
         <blockquote>
                 <p>{{message}}</p>
                 <small>{{username}}</small>
+                <br><small id="remove">REMOVE</small>
         </blockquote>
+</template>
+
+
+<template name="user_not_logged_in">
+	<div class="container-full">
+	      <div class="row">
+	        <div class="col-lg-12 text-center v-center">
+	          <h1>GitChat</h1>
+	          <p class="lead">A chat client built for Github teams and users.</p>
+	          
+	          <br><br><br>
+	          
+	          <div class="col-lg-12">
+	            {{loginButtons}}
+	          </div>
+	        </div>
+	        
+	      </div> <!-- /row -->
+	  
+	  	  <div class="row">
+	       
+	        <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
+	          <a href="#"><i class="icon-google-plus"></i></a> <a href="#"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
+	        </div>
+	      
+	      </div>
+	  
+	  	<br><br><br><br><br>
+
+	</div> <!-- /container full -->
 </template>
