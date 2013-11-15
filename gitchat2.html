@@ -12,16 +12,26 @@
 	{{> user_status}}
 </body>
 
+
+
 <template name="user_status">
 	{{#if currentUser}}
-		{{> header}}
-	    <div class="container">
-	        {{> input}}
-	        {{> messages}}
-	    </div>
+		<div id="wrap"> 
+			{{> header}}
+			{{> messages}}
+			<div id="push"></div>
+		</div>
+		{{> footer}}
 	{{else}}
-		{{> user_not_logged_in}}
+		{{#if loggingIn}}
+			{{> logging_user_in}}
+		{{else}}
+			{{> user_not_logged_in}}
+		{{/if}}
 	{{/if}}	
+
+	
+
 </template>
 
 <template name="header">
@@ -46,16 +56,8 @@
     </div>
 </template>
 
-<template name="input">
-        <div id="input" class="well">
-                <strong>Your message</strong>
-                <textarea class="input-xlarge" rows="3" id="newMessage"></textarea>
-                <a class="btn btn-primary btn-large" id="send">Send</a>
-        </div>
-</template>
-
 <template name="messages">
-        <div id="messages">
+        <div class="messages_container">
                 {{#each messages}}
                         {{> message}}
                 {{/each}}
@@ -63,13 +65,46 @@
 </template>
 
 <template name="message">
-        <blockquote>
-                <p>{{message}}</p>
-                <small>{{username}}</small>
-                <br><small id="remove">REMOVE</small>
-        </blockquote>
+	{{#if currentUser}}
+    	{{> message_me}}
+	{{else}}
+		{{> message_not_me}}
+	{{/if}}
 </template>
 
+<template name="message_me">
+  <div class="col-lg-6 col-lg-offset-3">
+	<div class="row">
+		<blockquote class="pull-right">
+			<p>{{message}} {{testString}}</p>
+			<small>Me - {{timestamp}}</small>
+			<div id="remove" style="text-align: right;">REMOVE</div>
+		</blockquote>
+	</div>
+  </div>
+</template>
+
+<template name="message_not_me">
+  <div class="col-lg-6 col-lg-offset-3">
+	<div class="row">
+		<blockquote>
+		    <p>{{message}}</p>
+		    <small>{{username}} - {{timestamp}}</small>
+		</blockquote>
+	</div>
+  </div>
+</template>
+
+<template name="logging_user_in">
+	<div class="container-full">
+		<div class="row">
+	        <div class="col-lg-12 text-center v-center">
+	          <h1>GitChat</h1>
+	          <p class="lead">Logging you in...</p>
+	        </div>
+	      </div> <!-- /row -->
+	</div>
+</template>
 
 <template name="user_not_logged_in">
 	<div class="container-full">
@@ -88,14 +123,22 @@
 	      </div> <!-- /row -->
 	  
 	  	  <div class="row">
-	       
 	        <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
 	          <a href="#"><i class="icon-google-plus"></i></a> <a href="#"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
 	        </div>
-	      
 	      </div>
-	  
-	  	<br><br><br><br><br>
-
 	</div> <!-- /container full -->
+</template>
+
+<template name="footer">
+	<div id="footer">
+		{{> input}}
+	</div> <!-- end footer -->
+</template>
+
+<template name="input">
+        <div id="input" class="well">
+                <textarea class="input-xlarge col-lg-9 col-lg-offset-1" rows="3.5" id="newMessage" placeholder="Your message"></textarea>
+                <a class="btn btn-primary btn-large" id="send">Send</a>
+        </div>
 </template>

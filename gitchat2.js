@@ -3,14 +3,20 @@ Messages = new Meteor.Collection("Messages");
 if (Meteor.isClient) {
   Template.messages.messages = function() {
     return Messages.find({
-
     }, {
       sort: {
-        timestamp: -1
+        timestamp: 1
       },
-      limit: 20
+      limit: 200
     });
   };
+
+  Template.message_me = function() {
+    var userProfileName = Meteor.user().profile.name;
+    console.log(userProfileName);
+    return userProfileName;
+  }
+
 
   Template.input.events({
     'click #send': function() {
@@ -24,8 +30,28 @@ if (Meteor.isClient) {
       }
       Meteor.saveMessage({
         message: message,
-        username: username
+        username: username,
+        timestamp: Date.now()
       });
+    }
+  });
+
+  Template.input.events({
+      //CODE FOR HITTING ENTER/RETURN BUTTON ON KEYBOARD TO SEND MESSAGES
+      "keydown #newMessage": function(event){
+      if(event.which == 13){
+        // Submit the form
+        var username = Meteor.user().profile.name;
+        var message = $('#newMessage').val();
+        if(name.value != '' && message.value != ''){
+          Messages.insert({
+            message: message,
+            username: username,
+            timestamp: Date.now()
+          });
+            newMessage.value = '';
+        }
+      }
     }
   });
 
@@ -59,6 +85,10 @@ if (Meteor.isClient) {
       }
     });
   };
+
+  //CODE FOR MAKING SCROLLBAR STICK TO BOTTOM
+  var textarea = document.getElementById('messages_container');
+  textarea.scrollTop = textarea.scrollHeight;
 
 }
 
